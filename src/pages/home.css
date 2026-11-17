@@ -1,0 +1,24 @@
+.recipe-explorer {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 40px;
+  padding-block: 55px 80px;
+}
+
+.recipe-results h2 {
+  margin: 0 0 10px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  color: var(--color-primary);
+}
+
+.recipe-results p {
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .recipe-explorer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}

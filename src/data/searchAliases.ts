@@ -1,0 +1,15 @@
+export const categoryAliases: Record<string, string> = {
+  poulet: "Chicken",
+  boeuf: "Beef",
+  bœuf: "Beef",
+  poisson: "Seafood",
+  poissons: "Seafood",
+  dessert: "Dessert",
+  desserts: "Dessert",
+  pâtes: "Pasta",
+  pates: "Pasta",
+  végétarien: "Vegetarian",
+  vegetarien: "Vegetarian",
+  entrée: "Starter",
+  entrées: "Starter",
+};

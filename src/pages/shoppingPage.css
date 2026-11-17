@@ -1,0 +1,184 @@
+/* Grille */
+
+.shopping-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0 3rem;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cartes */
+
+.shopping-item {
+  padding: 1.5rem;
+  border: 1px solid #e8e9df;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(52, 87, 71, 0.06);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.shopping-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(52, 87, 71, 0.12);
+}
+
+.shopping-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.shopping-item h3 {
+  margin: 0 0 0.4rem;
+  color: var(--color-primary, #345747);
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+}
+
+.shopping-item > p {
+  margin: 0 0 1.25rem;
+  color: #777e72;
+  font-size: 0.9rem;
+}
+
+/* Informations et actions */
+
+.shopping-info,
+.shopping-edit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.shopping-info span {
+  flex-basis: 100%;
+  color: var(--color-primary, #345747);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.shopping-item button {
+  padding: 0.65rem 1.1rem;
+  border: 0;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    background-color 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.shopping-item button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.shopping-item button:focus-visible,
+.shopping-item input:focus-visible {
+  outline: 2px solid var(--color-accent, #ef7567);
+  outline-offset: 3px;
+}
+
+.shopping-edit-button {
+  color: var(--color-primary, #345747);
+  background: #e4eee7;
+}
+
+.shopping-edit-button:hover {
+  background: #cddfd1;
+}
+
+.shopping-item .shopping-delete-button {
+  flex-shrink: 0;
+  border: 1px solid #c95a50;
+  color: #a92f25;
+  background: #fff0ed;
+}
+
+.shopping-item .shopping-delete-button:hover {
+  color: #fff;
+  background: #c95a50;
+}
+
+/* Mode édition */
+
+.shopping-edit input {
+  flex: 1 1 140px;
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid #d8dfd6;
+  border-radius: 9px;
+  color: var(--color-primary, #345747);
+  background: #fbf8f2;
+  font: inherit;
+}
+
+.shopping-save-button {
+  color: #fff;
+  background: var(--color-primary, #345747);
+}
+
+.shopping-save-button:hover {
+  background: #46745c;
+}
+
+.shopping-cancel-button {
+  color: #666;
+  background: #f1eee8;
+}
+
+.shopping-cancel-button:hover {
+  background: #e5e0d7;
+}
+
+.shopping-edit button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .shopping-list {
+    grid-template-columns: 1fr;
+  }
+
+  .shopping-item {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .shopping-item-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .shopping-delete-button {
+    align-self: flex-start;
+  }
+
+  .shopping-edit {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .shopping-edit input,
+  .shopping-edit button {
+    width: 100%;
+  }
+
+  .shopping-edit input {
+    flex: 0 1 auto;
+  }
+}

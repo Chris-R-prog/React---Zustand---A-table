@@ -1,0 +1,121 @@
+.planning-modal {
+  position: relative;
+  width: min(90%, 420px);
+  padding: 2rem;
+  border: none;
+  border-radius: 20px;
+  background: #fbf8f2;
+  color: #33312e;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.planning-modal::backdrop {
+  background: rgba(25, 45, 35, 0.6);
+  backdrop-filter: blur(3px);
+}
+
+.planning-modal h2 {
+  margin: 0 1.5rem 1rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.7rem;
+  color: var(--color-primary);
+}
+
+.planning-modal .modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  padding: 0.25rem;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.planning-modal .modal-close:hover {
+  color: var(--color-accent);
+}
+
+.planning-modal .modal-close:focus-visible {
+  border-radius: 50%;
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.planning-modal-image {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  margin: 1rem 0;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.planning-modal > p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.planning-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.planning-modal label {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.planning-modal input,
+.planning-modal button[type="submit"] {
+  padding: 0.85rem 1rem;
+  border-radius: 30px;
+  font: inherit;
+}
+
+.planning-modal input {
+  width: 100%;
+  border: 1px solid #e7e1d9;
+  background: white;
+  color: inherit;
+}
+
+.planning-modal input:focus-visible {
+  border-color: var(--color-primary);
+  outline: 3px solid #3457471f;
+}
+
+.planning-modal button[type="submit"] {
+  border: none;
+  background: var(--color-accent);
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.planning-modal button[type="submit"]:hover {
+  background: #d85d4f;
+  transform: translateY(-2px);
+}
+
+.planning-modal button[type="submit"]:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .planning-modal {
+    padding: 1.5rem;
+  }
+}

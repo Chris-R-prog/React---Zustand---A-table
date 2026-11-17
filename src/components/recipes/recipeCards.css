@@ -1,0 +1,100 @@
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.recipe-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.recipe-card-link {
+  display: block;
+  flex: 1;
+}
+
+.recipe-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.recipe-card-content {
+  padding: 20px;
+}
+
+.recipe-card h3 {
+  margin: 0 0 15px;
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+.recipe-card-action {
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* BOUTON PLANIFICATION */
+
+.recipe-card-plan {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin: 0 20px 20px;
+  padding: 12px 20px;
+
+  border: 1px solid var(--color-accent);
+  border-radius: 30px;
+
+  background-color: transparent;
+  color: var(--color-accent);
+
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.recipe-card-plan:hover {
+  background-color: var(--color-accent);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.recipe-card-plan:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1100px) {
+  .recipe-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .recipe-grid {
+    grid-template-columns: 1fr;
+  }
+}
