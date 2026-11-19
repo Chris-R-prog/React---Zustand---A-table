@@ -26,7 +26,7 @@ export interface IngredientSlice {
 // Cette fonction doit créer uniquement la partie ingrédients du store.
 export const createIngredientsSlice: StateCreator<
   RecipeStore,
-  [["zustand/devtools", never]],
+  [["zustand/devtools", never], ["zustand/persist", unknown]],
   [],
   IngredientSlice
 > = (set) => ({

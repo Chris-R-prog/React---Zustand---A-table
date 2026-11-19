@@ -1,26 +1,28 @@
-import { useRecipeStore } from "../store/useRecipeStore";
-import { selectIngredients } from "../store/ingredientsSlice";
 import ShoppingIngredient from "../components/shopping/shoppingIngredient";
+import { useShoppingIngredients } from "../hooks/useShoppingIngredients";
 import "./shoppingPage.css";
 
 export default function ShoppingPage() {
-  // Récupère tous les ingrédients enregistrés dans Zustand.
-  const ingredients = useRecipeStore(selectIngredients);
-
-  // On classe les ingrédients par date de consommation.
-  const sortedIngredients = [...ingredients].sort((a, b) =>
-    a.consumptionDate.localeCompare(b.consumptionDate),
-  );
+  const { visibleIngredients, showAll, togglePeriod } =
+    useShoppingIngredients();
 
   return (
     <main className="container">
       <h1>Ma liste de courses 🛒</h1>
+      <button
+        type="button"
+        className="shopping-filter-button"
+        aria-pressed={showAll}
+        onClick={togglePeriod}
+      >
+        {showAll ? "📅 Voir cette semaine" : "📋 Voir toutes les dates"}
+      </button>
 
-      {sortedIngredients.length === 0 ? (
-        <p>Aucun ingrédient dans votre liste de courses.</p>
+      {visibleIngredients.length === 0 ? (
+        <p>Aucun ingrédient pour cette période.</p>
       ) : (
         <ul className="shopping-list">
-          {sortedIngredients.map((ingredient) => (
+          {visibleIngredients.map((ingredient) => (
             <ShoppingIngredient key={ingredient.id} ingredient={ingredient} />
           ))}
         </ul>

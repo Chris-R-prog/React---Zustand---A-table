@@ -10,7 +10,7 @@ export default function RecipePage() {
   const { meal, status } = useMealDetail(id);
 
   return (
-    <main className="container">
+    <main className="container recipe-page">
       {/* Chaque élément s'affiche seulement quand sa condition est vraie. */}
       {status === "loading" && <p>Chargement de la recette...</p>}
       {status === "error" && <p>Impossible de récupérer cette recette.</p>}

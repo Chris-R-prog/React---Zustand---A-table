@@ -1,3 +1,5 @@
+// on utilise pas useQuery sur "Surprenez-moi "
+
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { getRandomMeal } from "../services/mealApi";

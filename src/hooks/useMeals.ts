@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import type { MealPreview } from "../types/meal";
 
 import {
@@ -6,52 +6,32 @@ import {
   getMealsByCategory,
   searchMeals,
 } from "../services/mealApi";
-type Status = "loading" | "success" | "empty" | "error";
-type Result = {
-  key: string;
-  meals: MealPreview[];
-  status: Exclude<Status, "loading">;
-};
 
 export function useMeals(category: string, searchTerm: string) {
-  // Cette clé permet de reconnaître la recherche qui a produit un résultat.
-  const requestKey = JSON.stringify([category, searchTerm]);
-  const [result, setResult] = useState<Result | null>(null);
+  // Chaque recherche possède sa propre clé dans le cache
+  const queryKey = searchTerm
+    ? ["meals", "search", searchTerm]
+    : category
+      ? ["meals", "category", category]
+      : ["meals", "featured"];
 
-  // La requête est relancée lorsque la catégorie ou le texte recherché change.
-  useEffect(() => {
-    // Il permettra d'annuler une ancienne requête devenue inutile.
-    const controller = new AbortController();
-    // On choisit l'appel API adapté aux critères actuels.
-    const request = searchTerm
-      ? searchMeals(searchTerm, controller.signal)
-      : category
-        ? getMealsByCategory(category, controller.signal)
-        : getFeaturedMeals(controller.signal);
+  const { data, isPending, isError } = useQuery<MealPreview[]>({
+    queryKey,
 
-    request
-      // Quand la réponse arrive, on enregistre les recettes et le nouveau statut.
-      .then((meals) => {
-        if (controller.signal.aborted) return;
-        setResult({
-          key: requestKey,
-          meals,
-          status: meals.length === 0 ? "empty" : "success",
-        });
-      })
-      .catch(() => {
-        if (!controller.signal.aborted) {
-          setResult({ key: requestKey, meals: [], status: "error" });
-        }
-      });
+    // La priorité reste : recherche, catégorie, puis sélection d'accueil.
+    queryFn: ({ signal }) =>
+      searchTerm
+        ? searchMeals(searchTerm, signal)
+        : category
+          ? getMealsByCategory(category, signal)
+          : getFeaturedMeals(signal),
+  });
 
-    // Si une autre recherche commence, l'ancienne est annulée.
-    return () => controller.abort();
-  }, [category, searchTerm, requestKey]);
+  // On conserve le format attendu par les composants existants.
+  if (isPending) return { meals: [], status: "loading" as const };
+  if (isError) return { meals: [], status: "error" as const };
 
-  // Tant que le résultat ne correspond pas à la recherche actuelle, on charge.
-  if (result?.key !== requestKey) {
-    return { meals: [], status: "loading" as const };
-  }
-  return { meals: result.meals, status: result.status };
+  if (!data.length) return { meals: [], status: "empty" as const };
+
+  return { meals: data, status: "success" as const };
 }

@@ -1,35 +1,11 @@
-import { useState } from "react";
 import type { PlannedIngredient } from "../../store/ingredientsSlice";
-import {
-  selectUpdateIngredient,
-  selectRemoveIngredient,
-} from "../../store/ingredientsSlice";
-import { useRecipeStore } from "../../store/useRecipeStore";
+import { useEditableIngredient } from "../../hooks/useEditableIngredient";
+import ShoppingIngredientEditor from "./ShoppingIngredientEditor";
 
 type Props = { ingredient: PlannedIngredient };
 
 export default function ShoppingIngredient({ ingredient }: Props) {
-  const updateIngredient = useRecipeStore(selectUpdateIngredient);
-  const removeIngredient = useRecipeStore(selectRemoveIngredient);
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [measure, setMeasure] = useState(ingredient.measure);
-  const [date, setDate] = useState(ingredient.consumptionDate);
-
-  function save() {
-    if (!measure.trim() || !date) return;
-    updateIngredient(ingredient.id, {
-      measure: measure.trim(),
-      consumptionDate: date,
-    });
-    setIsEditing(false);
-  }
-
-  function cancel() {
-    setMeasure(ingredient.measure);
-    setDate(ingredient.consumptionDate);
-    setIsEditing(false);
-  }
+  const editor = useEditableIngredient(ingredient);
 
   return (
     <li className="shopping-item">
@@ -38,42 +14,15 @@ export default function ShoppingIngredient({ ingredient }: Props) {
         <button
           type="button"
           className="shopping-delete-button"
-          onClick={() => removeIngredient(ingredient.id)}
+          onClick={editor.remove}
           aria-label={`Supprimer ${ingredient.name} de la liste de courses`}
         >
           Supprimer
         </button>
       </div>
       <p>🍽️ {ingredient.recipeName}</p>
-      {isEditing ? (
-        <div className="shopping-edit">
-          <input
-            aria-label="Quantité et unité"
-            value={measure}
-            onChange={(event) => setMeasure(event.target.value)}
-          />
-          <input
-            aria-label="Date de consommation"
-            type="date"
-            value={date}
-            onChange={(event) => setDate(event.target.value)}
-          />
-          <button
-            type="button"
-            className="shopping-save-button"
-            onClick={save}
-            disabled={!measure.trim() || !date}
-          >
-            Enregistrer
-          </button>
-          <button
-            type="button"
-            className="shopping-cancel-button"
-            onClick={cancel}
-          >
-            Annuler
-          </button>
-        </div>
+      {editor.isEditing ? (
+        <ShoppingIngredientEditor editor={editor} />
       ) : (
         <div className="shopping-info">
           <span>
@@ -82,7 +31,7 @@ export default function ShoppingIngredient({ ingredient }: Props) {
           <button
             type="button"
             className="shopping-edit-button"
-            onClick={() => setIsEditing(true)}
+            onClick={editor.startEditing}
           >
             Modifier
           </button>

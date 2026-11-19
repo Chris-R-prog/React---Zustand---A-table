@@ -3,12 +3,12 @@ import type { MealPreview } from "../types/meal";
 import { getMealById } from "../services/mealApi";
 import { extractIngredients } from "../utils/extractIngredients";
 import { useRecipeStore } from "../store/useRecipeStore";
-import { selectAddPlannedRecipe } from "../store/planningSlice";
-import { selectAddIngredients } from "../store/ingredientsSlice";
+import { selectAddPlanningWithIngredients } from "../store/planningSlice";
 
 export function usePlanRecipe() {
-  const addPlannedRecipe = useRecipeStore(selectAddPlannedRecipe);
-  const addIngredients = useRecipeStore(selectAddIngredients);
+  const addPlanningWithIngredients = useRecipeStore(
+    selectAddPlanningWithIngredients,
+  );
 
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
@@ -34,14 +34,15 @@ export function usePlanRecipe() {
         consumptionDate: date,
       }));
 
-      addPlannedRecipe({
-        planningId,
-        mealId: detail.idMeal,
-        name: detail.strMeal,
-        consumptionDate: date,
-      });
-
-      addIngredients(ingredients);
+      addPlanningWithIngredients(
+        {
+          planningId,
+          mealId: detail.idMeal,
+          name: detail.strMeal,
+          consumptionDate: date,
+        },
+        ingredients,
+      );
       return true;
     } catch {
       setError("Impossible d'enregistrer cette recette.");

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import type { RecipeStore } from "./RecipeStore";
 
 // Première partie du store : le planning.
@@ -12,11 +12,20 @@ import { createIngredientsSlice } from "./ingredientsSlice";
 export const useRecipeStore = create<RecipeStore>()(
   // devtools permet de voir les changements du store dans Redux DevTools.
   devtools(
-    (...args) => ({
-      // Chaque fonction crée sa partie du store. Les spreads les réunissent.
-      ...createPlanningSlice(...args),
-      ...createIngredientsSlice(...args),
-    }),
+    persist(
+      (...args) => ({
+        // Chaque fonction crée sa partie du store. Les spreads les réunissent.
+        ...createPlanningSlice(...args),
+        ...createIngredientsSlice(...args),
+      }),
+      {
+        name: "A table - recipes",
+        partialize: (state) => ({
+          plannedRecipes: state.plannedRecipes,
+          ingredients: state.ingredients,
+        }),
+      },
+    ),
     { name: "A table - Planning" },
   ),
 );

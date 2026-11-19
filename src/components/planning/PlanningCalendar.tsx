@@ -1,37 +1,15 @@
-import { useMemo } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/react/daygrid";
 import classicThemePlugin from "@fullcalendar/react/themes/classic";
-
+import interactionPlugin from "@fullcalendar/react/interaction";
 import "@fullcalendar/react/skeleton.css";
 import "@fullcalendar/react/themes/classic/theme.css";
 import "@fullcalendar/react/themes/classic/palette.css";
-
-import { useRecipeStore } from "../../store/useRecipeStore";
-import {
-  selectPlannedRecipes,
-  selectRemovePlannedRecipe,
-} from "../../store/planningSlice";
+import { usePlanningCalendar } from "../../hooks/usePlanningCalendar";
+import "./planningCalendar.css";
 
 export default function PlanningCalendar() {
-  // On récupère les recettes planifiées. Si elles changent, le calendrier se réaffiche.
-  const recipes = useRecipeStore(selectPlannedRecipes);
-
-  // Cette fonction du store sert à supprimer la recette planifiée sélectionnée.
-  const removePlannedRecipe = useRecipeStore(selectRemovePlannedRecipe);
-
-  // On ne recrée les événements que lorsque la liste des recettes change.
-  const events = useMemo(
-    () =>
-      // FullCalendar attend les noms id, title et start : map adapte nos recettes.
-      recipes.map((recipe) => ({
-        id: recipe.planningId,
-        title: recipe.name,
-        start: recipe.consumptionDate,
-        allDay: true,
-      })),
-    [recipes],
-  );
+  const { events, handleEventClick, handleEventDrop } = usePlanningCalendar();
 
   // FullCalendar reçoit le nouveau tableau et met son affichage à jour.
   return (
@@ -47,19 +25,14 @@ export default function PlanningCalendar() {
           right: "",
         }}
         todayText="Aujourd'hui"
-        plugins={[classicThemePlugin, dayGridPlugin]}
+        plugins={[classicThemePlugin, dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         firstDay={1}
         events={events}
-        eventClick={(info) => {
-          const confirmed = window.confirm(
-            `Supprimer « ${info.event.title} » du planning ?`,
-          );
-
-          if (confirmed) {
-            removePlannedRecipe(info.event.id);
-          }
-        }}
+        eventClick={handleEventClick}
+        editable
+        eventDurationEditable={false}
+        eventDrop={handleEventDrop}
       />
     </div>
   );
