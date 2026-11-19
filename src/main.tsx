@@ -11,8 +11,7 @@ import "./styles/global.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      {" "}
-      // on utilise une props
+      {/* On utilise une prop pour transmettre l’instance au provider. */}
       <BrowserRouter>
         <App />
       </BrowserRouter>

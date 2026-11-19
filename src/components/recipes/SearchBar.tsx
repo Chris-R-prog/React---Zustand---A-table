@@ -24,12 +24,12 @@ export default function SearchBar({
 
   return (
     <form className="recipe-search" onSubmit={handleSubmit} role="search">
+      {/* Le changement du champ est transmis au setter reçu depuis le parent. */}
       <input
         type="search"
         placeholder="Rechercher une recette..."
         aria-label="Rechercher une recette"
         value={query}
-        // On détecte le changement du Dom react, on récupère la valeur qu'on transmet à la fonction onQueryChange qui est en fait setSearchQuery le setter du useState du hook useMealExplorer passé au Hero
         onChange={(event) => onQueryChange(event.target.value)}
       />
 

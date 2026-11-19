@@ -18,8 +18,9 @@ export default function CategorySidebar({
       <h2>Inspiration thématique</h2>
 
       <div className="category-list">
-        {/* On crée un bouton pour chaque catégorie.
-            icon devient Icon pour pouvoir être utilisé comme un composant. */}
+        {/* On crée un bouton pour chaque catégorie. La catégorie est envoyée
+            au parent seulement au clic. icon devient Icon pour être utilisé
+            comme un composant. */}
         {categories.map(({ label, value, icon: Icon }) => (
           <button
             key={value}
@@ -27,7 +28,6 @@ export default function CategorySidebar({
             className={`category-option ${
               selectedCategory === value ? "active" : ""
             }`}
-            // La catégorie sera envoyée au parent seulement lors du clic.
             onClick={() => onSelectCategory(value)}
             aria-pressed={selectedCategory === value}
             aria-busy={value === "random" && randomLoading}

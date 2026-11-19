@@ -13,12 +13,11 @@ export default function HomePage() {
 
   return (
     <main>
-      {/* La barre reçoit le texte courant et les fonctions pour lancer une recherche. */}
+      {/* La barre peut afficher et modifier le texte sans posséder elle-même
+          le useState. Elle reçoit aussi la fonction de recherche sans l’exécuter. */}
       <HeroSection
-        //Le composant searchbar peut afficher et modifier le texte sans posséder lui-même le useStateon déte
         searchQuery={explorer.searchQuery}
         onSearchQueryChange={explorer.setSearchQuery}
-        // On transmet la fonction sans l'exécuter
         onSearch={explorer.search}
       />
       <section className="recipe-explorer container">
