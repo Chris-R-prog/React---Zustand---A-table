@@ -7,7 +7,7 @@ type HeroSectionProps = {
   onSearch: (query: string) => void;
 };
 
-// Ce composant transmet à SearchBar les informations reçues de HomePage.
+// Ce composant transmet à SearchBar les informations reçues de HomePage. On pourrait intégrer la searchbar au hero mais on ne respecterait pas le principe de responsabilité unique des composant et on passerait au delà des 50 lignes demandées
 export default function HeroSection({
   searchQuery,
   onSearchQueryChange,

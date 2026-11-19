@@ -7,9 +7,12 @@ import { queryClient } from "./queries/queryClient.ts";
 import App from "./App.tsx";
 import "./styles/global.css";
 
+// On wrappe l'application dans le QueryClient Provider et on lui passe l'instance de la classe QueryClient
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
+      {" "}
+      // on utilise une props
       <BrowserRouter>
         <App />
       </BrowserRouter>

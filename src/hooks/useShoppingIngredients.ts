@@ -21,6 +21,7 @@ function getCurrentWeek() {
 
 export function useShoppingIngredients() {
   const ingredients = useRecipeStore(selectIngredients);
+  // afficher les ingrédients de la semaine ou tous les ingrédients
   const [showAll, setShowAll] = useState(false);
   const [start, end] = getCurrentWeek();
 
@@ -28,8 +29,7 @@ export function useShoppingIngredients() {
   const filteredIngredients = showAll
     ? ingredients
     : ingredients.filter(
-        (item) =>
-          item.consumptionDate >= start && item.consumptionDate <= end,
+        (item) => item.consumptionDate >= start && item.consumptionDate <= end,
       );
   const visibleIngredients = [...filteredIngredients].sort((a, b) =>
     a.consumptionDate.localeCompare(b.consumptionDate),

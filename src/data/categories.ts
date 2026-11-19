@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
+// le label est la valeur d'affichage et value la valeur de travail permettant d'identifier la catégorie
 export const categories = [
   { label: "Tout découvrir", value: "", icon: LayoutGrid },
   { label: "Surprenez-moi", value: "random", icon: Sparkles },

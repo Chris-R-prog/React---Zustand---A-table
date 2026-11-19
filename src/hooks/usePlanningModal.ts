@@ -2,13 +2,17 @@ import { useEffect, useRef, useState, type SubmitEvent } from "react";
 import type { MealPreview } from "../types/meal";
 import { usePlanRecipe } from "./usePlanRecipe";
 
+// le hook reçoit meal la recette à planifier et is open qui indique si la modale doit-être ouverte
 export function usePlanningModal(meal: MealPreview, isOpen: boolean) {
+  // On consrtve une référence à un élément du DOM sans déclancher de nouveau rendu
   const dialogRef = useRef<HTMLDialogElement>(null);
+
   const [selectedDate, setSelectedDate] = useState("");
   // Le hook métier récupère la recette et l'enregistre dans Zustand.
   const { planRecipe, isSaving, error } = usePlanRecipe();
 
-  // Synchronise le dialog natif avec l'état du composant parent.
+  // useToggle gère l'état isOpen dans le composant parent
+  // UseEffect synchronise cet état avec <dialog>. Lorsque isOpen change, on appelle showModal ou close pour ouvrir ou fermer réellement la fenêtre dans le navigateur.
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;

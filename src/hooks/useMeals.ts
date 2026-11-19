@@ -1,3 +1,5 @@
+// On utilise TanStackQuery pour useMeal car c'est l'élément principal qui fait appel à l'API
+
 import { useQuery } from "@tanstack/react-query";
 import type { MealPreview } from "../types/meal";
 
@@ -8,7 +10,9 @@ import {
 } from "../services/mealApi";
 
 export function useMeals(category: string, searchTerm: string) {
-  // Chaque recherche possède sa propre clé dans le cache
+  // On construit un tableau qui set de clé pour identifier une requête dans le cache de TanStack Query.
+  // chaque recherche a sa clé ce qui permet la mise en cache de plusieurs éléments
+
   const queryKey = searchTerm
     ? ["meals", "search", searchTerm]
     : category

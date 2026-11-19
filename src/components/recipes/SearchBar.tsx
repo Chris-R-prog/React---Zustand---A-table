@@ -29,7 +29,7 @@ export default function SearchBar({
         placeholder="Rechercher une recette..."
         aria-label="Rechercher une recette"
         value={query}
-        // À chaque frappe, on envoie le nouveau texte au parent.
+        // On détecte le changement du Dom react, on récupère la valeur qu'on transmet à la fonction onQueryChange qui est en fait setSearchQuery le setter du useState du hook useMealExplorer passé au Hero
         onChange={(event) => onQueryChange(event.target.value)}
       />
 
